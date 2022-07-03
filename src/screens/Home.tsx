@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Component } from 'react';
 import {
   Image,
   SafeAreaView,
@@ -15,6 +15,7 @@ import * as watchListActions from '../store/actions/watchlist';
 import * as topmoversAction from '../store/actions/topmovers';
 import { TopmoversState } from '../store/reducers/topmovers';
 import { WatchlistState } from '../store/reducers/watchlist';
+import { NestableScrollContainer } from 'react-native-draggable-flatlist';
 
 interface RootState {
   watchlist: WatchlistState;
@@ -47,7 +48,7 @@ const Home = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView contentContainerStyle={{ alignItems: 'center' }}>
+      <NestableScrollContainer contentContainerStyle={{ alignItems: 'center' }}>
         <Image
           style={styles.image}
           source={{ uri: 'http://i.imgur.com/9EEaSaS.png' }}
@@ -57,7 +58,7 @@ const Home = () => {
         <CBButton title='Get Started' />
 
         <Whatchlist coinData={watchListData} />
-      </ScrollView>
+      </NestableScrollContainer>
     </SafeAreaView>
   );
 };

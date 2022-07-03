@@ -3,6 +3,7 @@ import { FC, useCallback, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { useDispatch } from 'react-redux';
 import DraggableFlatList, {
+  NestableDraggableFlatList,
   RenderItemParams,
 } from 'react-native-draggable-flatlist';
 import * as Haptics from 'expo-haptics';
@@ -40,7 +41,7 @@ const Whatchlist: FC<TopMoversProps> = ({ coinData }) => {
     <View>
       <Text style={styles.watchlistText}>Watchlist</Text>
       <View style={styles.watchlistContainer}>
-        <DraggableFlatList
+        <NestableDraggableFlatList
           data={coinData}
           keyExtractor={(item) => item.id.toString()}
           scrollEnabled={false}
