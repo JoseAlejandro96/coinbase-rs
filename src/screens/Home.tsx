@@ -1,48 +1,62 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import {
-  Text,
-  View,
-  StyleSheet,
+  Image,
   SafeAreaView,
   ScrollView,
-  Image,
+  StyleSheet,
+  Text,
 } from 'react-native';
-import Colors from '../constants/Colors';
 import CBButton from '../components/CBButton';
+import Colors from '../constants/Colors';
 
-import { WatchlistState } from '../store/reducers/watchlist';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import Whatchlist from '../components/Whatchlist';
 import * as watchListActions from '../store/actions/watchlist';
+import * as topmoversAction from '../store/actions/topmovers';
+import { TopmoversState } from '../store/reducers/topmovers';
+import { WatchlistState } from '../store/reducers/watchlist';
+
+interface RootState {
+  watchlist: WatchlistState;
+  topmovers: TopmoversState;
+}
 
 const Home = () => {
+  const watchListData = useSelector(
+    (state: RootState) => state.watchlist.watchlistData
+  );
+
+  const topMoversData = useSelector(
+    (state: RootState) => state.topmovers.topMoversData
+  );
 
   const dispatch = useDispatch();
 
   const loadData = () => {
-    try{
+    try {
       dispatch(watchListActions.fetchCoinData());
-    } catch(e){
+      dispatch(topmoversAction.fetchTopMoversData());
+    } catch (e) {
       console.log(e);
     }
-  }
+  };
 
   useEffect(() => {
     loadData();
-  }, [])
-  
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView
-        contentContainerStyle={{alignItems: 'center'}}
-      >
+      <ScrollView contentContainerStyle={{ alignItems: 'center' }}>
         <Image
           style={styles.image}
           source={{ uri: 'http://i.imgur.com/9EEaSaS.png' }}
         />
         <Text style={styles.title}>Welcome to Coinbase!</Text>
         <Text style={styles.subtitle}>Make your first investment today</Text>
-        <CBButton title="Get Started"/>
+        <CBButton title='Get Started' />
+
+        <Whatchlist coinData={watchListData} />
       </ScrollView>
     </SafeAreaView>
   );
@@ -68,7 +82,7 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 17,
     marginBottom: 24,
-    color: Colors.subtitle
+    color: Colors.subtitle,
   },
 });
 

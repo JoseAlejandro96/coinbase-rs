@@ -1,4 +1,3 @@
-
 import { AnyAction } from 'redux';
 import Coin from '../../models/Coin';
 import { SET_WATCHLIST_DATA } from '../actions/watchlist';

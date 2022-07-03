@@ -10,19 +10,18 @@ import * as Haptics from 'expo-haptics';
 import Colors from '../constants/Colors';
 
 export interface CBButtonProps {
-  title: string
+  title: string;
 }
 
-const CBButton: FC<CBButtonProps> = ({title}) => {
-
+const CBButton: FC<CBButtonProps> = ({ title }) => {
   const animatedValue = new Animated.Value(1);
 
   const onPressIn = () => {
     Animated.spring(animatedValue, {
       toValue: 0.9,
-      useNativeDriver: true
+      useNativeDriver: true,
     }).start();
-  }
+  };
 
   const onPressOut = () => {
     Animated.spring(animatedValue, {
@@ -32,17 +31,17 @@ const CBButton: FC<CBButtonProps> = ({title}) => {
   };
 
   const animatyedStyle = {
-    transform: [{scale: animatedValue}]
-  }
+    transform: [{ scale: animatedValue }],
+  };
 
   return (
     <Animated.View style={[styles.container, animatyedStyle]}>
       <TouchableHighlight
-        style={{borderRadius: 10}}
+        style={{ borderRadius: 10 }}
         onPressIn={onPressIn}
         onPressOut={onPressOut}
         onPress={() => {
-          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy)
+          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
         }}
       >
         <View style={styles.button}>
@@ -51,27 +50,26 @@ const CBButton: FC<CBButtonProps> = ({title}) => {
       </TouchableHighlight>
     </Animated.View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     width: '85%',
-    borderRadius: 8
+    borderRadius: 8,
   },
-  button:{
+  button: {
     width: '100%',
     height: 57,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: Colors.cbBlue,
-    borderRadius: 10
+    borderRadius: 10,
   },
   text: {
     color: 'white',
     fontWeight: 'bold',
-    fontSize: 16
-  }
-})
-
+    fontSize: 16,
+  },
+});
 
 export default CBButton;

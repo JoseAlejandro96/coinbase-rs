@@ -25,7 +25,7 @@ const TabBarNavigator = createBottomTabNavigator();
 
 const TabNavigator = () => {
   return (
-    <TabBarNavigator.Navigator tabBar={(props) => <TabBar {...props}/>}>
+    <TabBarNavigator.Navigator tabBar={(props) => <TabBar {...props} />}>
       <TabBarNavigator.Screen name='Home' component={Home} />
       <TabBarNavigator.Screen name='Portfolio' component={Portfolio} />
       <TabBarNavigator.Screen name='Actions' component={Actions} />
@@ -33,14 +33,14 @@ const TabNavigator = () => {
       <TabBarNavigator.Screen name='Settings' component={Settings} />
     </TabBarNavigator.Navigator>
   );
-}
+};
 
 const AppNavigator = () => {
-  return(
+  return (
     <NavigationContainer>
       <TabNavigator />
     </NavigationContainer>
-  )
-}
+  );
+};
 
 export default AppNavigator;

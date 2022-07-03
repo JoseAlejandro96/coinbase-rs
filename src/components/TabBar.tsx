@@ -35,44 +35,48 @@ const TabBar = ({ state, navigation }: BottomTabBarProps) => {
         };
 
         let iconName;
-        switch(route.name){
-          case "Home":
-            iconName = "home";
+        switch (route.name) {
+          case 'Home':
+            iconName = 'home';
             break;
-          case "Porfolio":
-            iconName = "pie-chart";
+          case 'Porfolio':
+            iconName = 'pie-chart';
             break;
-          case "Prices":
-            iconName = "cellular";
+          case 'Prices':
+            iconName = 'cellular';
             break;
           default:
-            iconName = "person"
-            break
+            iconName = 'person';
+            break;
         }
 
         const animatedValue = new Animated.Value(1);
-        
+
         const onPressIn = () => {
           Animated.spring(animatedValue, {
             toValue: 0.9,
-            useNativeDriver: true
+            useNativeDriver: true,
           }).start();
-        }
+        };
 
         const onPressOut = () => {
           Animated.spring(animatedValue, {
             toValue: 1,
             useNativeDriver: true,
           }).start();
-        }
+        };
 
         const animatedStyle = {
-          transform: [{scale: animatedValue}]
-        }
+          transform: [{ scale: animatedValue }],
+        };
 
         return (
           <Animated.View
-            style={[styles.tabItem, animatedStyle, isActions ? {marginTop: 7}: {marginTop: 10}]}
+            style={[
+              styles.tabItem,
+              animatedStyle,
+              isActions ? { marginTop: 7 } : { marginTop: 10 },
+            ]}
             key={route.name}
           >
             <TouchableOpacity
@@ -85,9 +89,16 @@ const TabBar = ({ state, navigation }: BottomTabBarProps) => {
                   <Ionicons name='swap-horizontal' size={20} color='white' />
                 </View>
               ) : (
-                <View style={{alignItems: 'center'}}>
-                  <Ionicons name={iconName as any} size={20} color={itemColor} style={{marginBottom: 2}}/>
-                  <Text style={[{color: itemColor}, styles.tabBarText]}>{route.name}</Text>
+                <View style={{ alignItems: 'center' }}>
+                  <Ionicons
+                    name={iconName as any}
+                    size={20}
+                    color={itemColor}
+                    style={{ marginBottom: 2 }}
+                  />
+                  <Text style={[{ color: itemColor }, styles.tabBarText]}>
+                    {route.name}
+                  </Text>
                 </View>
               )}
             </TouchableOpacity>
