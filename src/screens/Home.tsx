@@ -16,6 +16,7 @@ import * as topmoversAction from '../store/actions/topmovers';
 import { TopmoversState } from '../store/reducers/topmovers';
 import { WatchlistState } from '../store/reducers/watchlist';
 import { NestableScrollContainer } from 'react-native-draggable-flatlist';
+import TopMovers from '../components/TopMoversList';
 
 interface RootState {
   watchlist: WatchlistState;
@@ -58,6 +59,8 @@ const Home = () => {
         <CBButton title='Get Started' />
 
         <Whatchlist coinData={watchListData} />
+
+        <TopMovers coinData={topMoversData} />
       </NestableScrollContainer>
     </SafeAreaView>
   );
