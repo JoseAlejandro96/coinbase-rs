@@ -1,29 +1,39 @@
-import React, { useEffect, Component } from 'react';
-import {
-  Image,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  Text,
-} from 'react-native';
+import React, { useEffect } from 'react';
+import { Image, SafeAreaView, StyleSheet, Text } from 'react-native';
 import CBButton from '../components/CBButton';
 import Colors from '../constants/Colors';
 
+import { NestableScrollContainer } from 'react-native-draggable-flatlist';
 import { useDispatch, useSelector } from 'react-redux';
+import TopMovers from '../components/TopMoversList';
 import Whatchlist from '../components/Whatchlist';
-import * as watchListActions from '../store/actions/watchlist';
 import * as topmoversAction from '../store/actions/topmovers';
+import * as watchListActions from '../store/actions/watchlist';
+import * as newsActions from '../store/actions/news';
+
 import { TopmoversState } from '../store/reducers/topmovers';
 import { WatchlistState } from '../store/reducers/watchlist';
-import { NestableScrollContainer } from 'react-native-draggable-flatlist';
-import TopMovers from '../components/TopMoversList';
+import { NewsState } from '../store/reducers/news';
+import NewsList from '../components/NewsList';
+import { RootStackParamList } from '../navigation/AppNavigator';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 interface RootState {
   watchlist: WatchlistState;
   topmovers: TopmoversState;
+  news: NewsState;
 }
 
-const Home = () => {
+type HomeScreenNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  'HomeScreen'
+>;
+
+type Props = {
+  navigation: HomeScreenNavigationProp;
+};
+
+const Home = ({ navigation }: Props) => {
   const watchListData = useSelector(
     (state: RootState) => state.watchlist.watchlistData
   );
@@ -32,12 +42,15 @@ const Home = () => {
     (state: RootState) => state.topmovers.topMoversData
   );
 
+  const newsData = useSelector((state: RootState) => state.news.newsData);
+
   const dispatch = useDispatch();
 
   const loadData = () => {
     try {
       dispatch(watchListActions.fetchCoinData());
       dispatch(topmoversAction.fetchTopMoversData());
+      dispatch(newsActions.fetchNewsData());
     } catch (e) {
       console.log(e);
     }
@@ -46,6 +59,10 @@ const Home = () => {
   useEffect(() => {
     loadData();
   }, []);
+
+  const viewMoreHandler = () => {
+    navigation.navigate('News');
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -61,9 +78,21 @@ const Home = () => {
         <Whatchlist coinData={watchListData} />
 
         <TopMovers coinData={topMoversData} />
+
+        <NewsList
+          isHomeScreen={true}
+          newsData={newsData}
+          viewMoreHandler={viewMoreHandler}
+        />
       </NestableScrollContainer>
     </SafeAreaView>
   );
+};
+
+export const screenOptions = () => {
+  return {
+    headerShown: false,
+  };
 };
 
 const styles = StyleSheet.create({
